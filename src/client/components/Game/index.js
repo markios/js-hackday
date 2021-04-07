@@ -89,7 +89,7 @@ function Game({ game, onReady, onAnswer }) {
                             //     return user.name.length < longest ? longest : user.name.length;
                             // }, 0);
 
-                            return game.users.map(player => (
+                            return [...game.users].sort((a, b) => game.leaderboard[a.id] < game.leaderboard[b.id]).map(player => (
                                 <tr>
                                     <td className="game-leaderboard-name-value">{player.name}</td>
                                     <td className="game-leaderboard-score-value">{game.leaderboard[player.id]}</td>
