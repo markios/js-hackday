@@ -1,20 +1,62 @@
 import { Server } from 'socket.io';
+import Game from './Game.js';
 
 export default (app) => {
   const io = new Server();
   const globalSocket = io.listen(app);
 
+  const GAMES = {};
+  const USERS = {};
+
+  const getSocketsForGame = (game) => {
+    const gameUsers = game.getUsers();
+    
+    return gameUsers.map(({ id }) => USERS[id]);
+  };
+
+  const broadcastGameState = (game) => {
+    const sockets = getSocketsForGame(game);
+    const gameState = game.getStateSnapshot();
+    sockets.forEach((socket) => {
+      socket.emit('game/state', gameState);
+    });
+  };
+
   globalSocket.sockets.on('connection', (socket) => {
-    socket.on('game/join', (data) => {
-      console.log(data);
-      // name: string, avatar: "#aabbcc", gameId: "default nanoid()
-      // if game doesn't exist, create game (new game)
-      // broadcast/user game/state to new user
-      // socket.emit('game/state', { gameId: 11 });
+    socket.on('game/join', ({ id, user }) => {
+      console.log(`GAME JOIN ${user.id}`);
+      if (!GAMES.hasOwnProperty(id)) {
+        GAMES[id] = new Game(id);
+      }
+
+      const game = GAMES[id];
+      game.addUser(user);
+      USERS[user.id] = socket;
+
+      // broadcast game state
+      broadcastGameState(game);
+    });
+
+    socket.on('game/ready', ({ userId, id }) => {
+      console.log(`GAME READY ${userId}`);
+      const game = GAMES[id];
+      game.addReady(userId);
+
+      // broadcast game state
+      broadcastGameState(game);
+    });
+
+    socket.on('game/answer', ({ userId, id, answerId }) => {
+      console.log(`GAME ANSWER ${userId}`);
+      const game = GAMES[id];
+      game.addVote(userId, answerId);
+
+      // broadcast game state
+      broadcastGameState(game);
     });
 
     socket.on('disconnect', (e) => {
-      console.log('disconnected', e);
+      // remove user
     });
 
     // socket.on('game/ready', () => {

@@ -15,35 +15,35 @@ function Game({ game, onReady, onAnswer }) {
     
     return (
         <div className="game-wrapper">
+          <div className="game-players-wrapper">
+            <div className="game-players">
+              {game.users.map(player => {
+                let extra = "null";
 
-            <div className="game-players-wrapper">
-                <div className="game-players">
-                    {game.users.map(player => {
-                        let extra = "null";
+                if(game.status === "pending" && !game.readyList[player.id]) {
+                  extra = "Waiting";
+                }
 
-                        if(game.status === "pending" && !game.readyList[player.id]) {
-                            extra = "Waiting";
-                        }
+                if(game.status === "started" && !game.question.readyList[player.id]) {
+                  extra = "Waiting";
+                }
 
-                        if(game.status === "started" && !game.question.readyList[player.id]) {
-                            extra = "Waiting";
-                        }
+                if(game.status === "finished") {
+                  extra = game.leaderboard.find(({ userId }) => userId === player.id).score + " points";
+                }
 
-                        if(game.status === "finished") {
-                            extra = game.leaderboard[player.id] + " points";
-                        }
-
-                        return (
-                            <div key={player.id}
-                                 className="game-player"
-                                 style={{background: player.avatar}}
-                                 data-extra={extra}>
-                                    {player.name}
-                            </div>
-                        );
-                    })}
-                </div>
+                return (
+                  <div
+                    key={player.id}
+                    className="game-player"
+                    style={{background: player.avatar}}
+                    data-extra={extra}>
+                    {player.name}
+                  </div>
+                );
+              })}
             </div>
+          </div>
 
             <div className="game-state">
                 <div className="game-title">Songhack</div>
@@ -84,18 +84,15 @@ function Game({ game, onReady, onAnswer }) {
                             <th>Score</th>
                         </tr>
                         
-                        {(() => {
-                            // const longestNameLength = game.users.reduce((longest, user) => {
-                            //     return user.name.length < longest ? longest : user.name.length;
-                            // }, 0);
-
-                            return [...game.users].sort((a, b) => game.leaderboard[a.id] < game.leaderboard[b.id]).map(player => (
-                                <tr>
-                                    <td className="game-leaderboard-name-value">{player.name}</td>
-                                    <td className="game-leaderboard-score-value">{game.leaderboard[player.id]}</td>
-                                </tr>
-                            ));
-                        })()}
+                        {game.leaderboard.map(({ userId, score }) => {
+                            const player = game.users.find((user) => user.id === userId);
+                            return (
+                              <tr>
+                                <td className="game-leaderboard-name-value">{player.name}</td>
+                                <td className="game-leaderboard-score-value">{score}</td>
+                              </tr>
+                            );
+                        })}
                     </table>
                 </>}
             </div>

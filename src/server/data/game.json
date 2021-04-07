@@ -1,0 +1,16 @@
+{
+  "title": "Something something",
+  "questions": [{
+    "id": 1,
+    "text": "What is the name of the artist",
+    "musicId": 51923948,
+    "correctAnswer": 1,
+    "answers": [{
+      "id": 1,
+      "text": "Bobby brown"
+    }, {
+      "id": 2,
+      "text": "Bobby Baddy"
+    }]
+  }]
+}

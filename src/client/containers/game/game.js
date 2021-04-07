@@ -7,26 +7,29 @@ import {
 } from "react-router-dom";
 import { store } from '../../store/gameStore';
 import UserForm from '../../components/userForm/userForm';
+import Game from '../../components/Game';
 
-const Game = ({ match }) => {
+const GameContainer = ({ match }) => {
   let { id } = useParams();
   const history = useHistory();
   const {
     setGameId,
     state,
-    onRegisterUser
+    onRegisterUser,
+    onReady,
+    onAnswer
   } = useContext(store);
-  const { game, currentUser } = state;
+  const { target, game, currentUser } = state;
   
   useEffect(() => {
     setGameId(id);
   }, []);
 
   useEffect(() => {
-    if (game && currentUser === null) {
+    if (target && currentUser === null) {
       history.push(`/game/${id}/user`);
     }
-  }, [game]);
+  }, [target]);
 
   const onUserSubmitted = (...args) => {
     onRegisterUser(...args);
@@ -39,10 +42,11 @@ const Game = ({ match }) => {
         <UserForm onSubmit={onUserSubmitted} />
       </Route>
       <Route path={`${match.path}`}>
-        <h1>Game {id}</h1>
+        {!game && <div>Loading game {target}</div>}
+        {game && <Game game={state.game} onReady={onReady} onAnswer={onAnswer}/>}
       </Route>
     </Switch>
   );
 };
 
-export default Game;
+export default GameContainer;

@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { get } from '../util/localStorage';
 import { io } from "socket.io-client";
+import { v4 as uuid } from 'uuid';
 
 const initialState = { game: null, currentUser: null, recentGames: get() };
 const store = createContext(initialState);
@@ -15,19 +16,24 @@ const StateProvider = ( { children } ) => {
   /* Application State */
   const [state, dispatch] = useReducer((state, action) => {
     switch(action.type) {
-      case 'GAME_ID': {
+      case 'TARGET': {
+        const user = state.recentGames?.[action.payload] ?? null;
         return {
           ...state,
-          game: {
-            ...state.game,
-            id: action.payload,
-          },
+          target: action.payload,
+          currentUser: user
         };
       }
       case 'USER': {
         return {
           ...state,
           currentUser: action.payload
+        };
+      }
+      case 'GAME_STATE': {
+        return {
+          ...state,
+          game: action.payload
         };
       }
       default:
@@ -37,34 +43,39 @@ const StateProvider = ( { children } ) => {
 
   /* Socket */
   const [socket, setSocket] = useState(null);
+  const [connected, setConnected] = useState(null);
 
   useEffect(() => {
     setSocket(io());
+    setConnected(true);
   }, []);
 
   useEffect(() => {
-    if (socket) {
+    if (connected) {
       socket.on('game/state', (game) => {
-        console.log(game);
+        dispatch({
+          type: 'GAME_STATE',
+          payload: game
+        });
+        console.log(`GAME STATE`, game);
       });
     }
-  }, [socket]);
+  }, [connected]);
 
   useEffect(() => {
-    if (socket && state.currentUser) {
+    if (socket && state.currentUser && !state.game) {
       socket.emit('game/join', {
-        id: state.game.id,
+        id: state.target,
         user: state.currentUser
       });
     }
   }, [state]);
   
-  const connectToServer = () => setSocket(io());
-  
   /* Handlers */
+
   const setGameId = (id) => {
     dispatch({
-      type: 'GAME_ID',
+      type: 'TARGET',
       payload: id
     });
   };
@@ -73,16 +84,35 @@ const StateProvider = ( { children } ) => {
     // subscribe to socket
     dispatch({
       type: 'USER',
-      payload: { name, avatar }
+      payload: {
+        id: uuid(),
+        name,
+        avatar
+      }
     });
-    // connect to the server
-    connectToServer();
+  };
+
+  const onReady = () => {
+    socket.emit('game/ready', {
+      userId: state.currentUser.id,
+      id: state.game.id
+    });
+  };
+
+  const onAnswer = (answerId) => {
+    socket.emit('game/answer', {
+      userId: state.currentUser.id,
+      id: state.game.id,
+      answerId
+    });
   };
 
   return <Provider value={{
     state,
     dispatch,
     onRegisterUser,
+    onReady,
+    onAnswer,
     setGameId,
   }}>{children}</Provider>;
 };
