@@ -1,24 +1,31 @@
-import io from 'socket.io';
+import { Server } from 'socket.io';
 
 export default (app) => {
+  const io = new Server();
   const globalSocket = io.listen(app);
 
   globalSocket.sockets.on('connection', (socket) => {
+    socket.emit('game/state', { gameId: 11 });
     socket.on('game/join', (user) => {
       // name: string, avatar: "#aabbcc", gameId: "default nanoid()
       // if game doesn't exist, create game (new game)
       // broadcast/user game/state to new user
+      socket.emit('game/state', { gameId: 11 });
     });
 
-    socket.on('game/ready', () => {
-      // game event
-      // ready for game to start | answered question
-      // update game & broadcast game state
+    socket.on('disconnect', (e) => {
+      console.log('disconnected', e);
     });
 
-    socket.on('game/answer', (answer) => {
-      // answer { id, } use weak map to find the stuff. 
-    });
+    // socket.on('game/ready', () => {
+    //   // game event
+    //   // ready for game to start | answered question
+    //   // update game & broadcast game state
+    // });
+
+    // socket.on('game/answer', (answer) => {
+    //   // answer { id, } use weak map to find the stuff. 
+    // });
 
     /* Game State
     // pending
