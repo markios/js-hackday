@@ -1,0 +1,44 @@
+.user-form {
+  width: 400px;
+  min-height: 300px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.user-form__header {
+  text-align: center;
+}
+
+.user-form__wrapper {
+  height: 170px;
+}
+
+.purple-background {
+  background-image: linear-gradient(to bottom right,#a855f7, #6366f1);
+}
+
+input {
+  margin: 5px 0;
+  flex-grow: 0;
+  display: inline-block;
+}
+
+input[type="color"] {
+  margin-right: 10px;
+}
+
+input[type="text"] {
+  width: 200px;
+  height: 35px;
+  font-size: 20px;
+  display: block;
+}
+
+button {
+  width: 200px;
+  height: 40px;
+  font-size: 20px;
+}

@@ -1,24 +1,29 @@
-import { useEffect } from 'react';
-import { io } from "socket.io-client"
-import logo from './logo.svg';
+import { v4 as uuid } from 'uuid';
+import Game from './containers/game/game';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import './App.css';
 
-import { playTrack } from "./util/songs";
-
 const App = () => {
-  useEffect(() => {
-    const socket = io('http://localhost:3000');
-    socket.on("game/state", data => console.log(data));
-  }, []);
-
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p onClick={() => playTrack("975918478", 10)}>
-          Click to play
-        </p>
-      </header>
+      <header className="App-header"></header>
+      <Router>
+        <Switch>
+          <Route path="/game/:id" component={Game} />
+          <Route path="/">
+            <Redirect
+              to={{
+                pathname: `/game/${uuid()}`
+              }}
+            />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

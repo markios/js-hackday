@@ -10,7 +10,7 @@ export default (app) => {
       // name: string, avatar: "#aabbcc", gameId: "default nanoid()
       // if game doesn't exist, create game (new game)
       // broadcast/user game/state to new user
-      socket.emit('game/state', { gameId: 11 });
+      // socket.emit('game/state', { gameId: 11 });
     });
 
     socket.on('disconnect', (e) => {
