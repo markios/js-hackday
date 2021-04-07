@@ -1,25 +1,26 @@
 import {
-  useContext
+  useState
 } from 'react';
-import { store } from '../../store/gameStore';
 import './userForm.css';
 
-const UserForm = () => {
-  const state = useContext(store);
-  const { onSubmitUser } = state;
+const onChangeWrapper = (setter) => (e) => setter(e.currentTarget.value);
 
-  const onSubmit = (e) => {
+const UserForm = ({ onSubmit }) => {
+  const [name, setName] = useState('');
+  const [avatar, setAvatar] = useState('#000');
+  
+  const onSubmitHandler = (e) => {
     e.preventDefault();
-    onSubmitUser(1, 2);
+    onSubmit(name, avatar);
   };
 
   return (
     <div className="user-form purple-background">
       <h2 className="user-form__header">User Form</h2>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmitHandler}>
         <div className="user-form__wrapper">
-          <input type="text" name="name" placeholder="Name"></input>
-          <input type="color" name="avatar"></input>
+          <input required type="text" value={name} onChange={onChangeWrapper(setName)} name="name" placeholder="Name" />
+          <input required type="color" value={avatar} onChange={onChangeWrapper(setAvatar)} name="avatar" />
           <label htmlFor="avatar">Colour</label>
         </div>
         <button>Submit</button>

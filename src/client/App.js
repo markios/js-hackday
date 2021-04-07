@@ -6,25 +6,28 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
+import { StateProvider } from './store/gameStore';
 import './App.css';
 
 const App = () => {
   return (
-    <div className="App">
+    <main className="App">
       <header className="App-header"></header>
-      <Router>
-        <Switch>
-          <Route path="/game/:id" component={Game} />
-          <Route path="/">
-            <Redirect
-              to={{
-                pathname: `/game/${uuid()}`
-              }}
-            />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+      <StateProvider>
+        <Router>
+          <Switch>
+            <Route path="/game/:id" component={Game} />
+            <Route path="/">
+              <Redirect
+                to={{
+                  pathname: `/game/${uuid()}`
+                }}
+              />
+            </Route>
+          </Switch>
+        </Router>
+      </StateProvider>
+    </main>
   );
 }
 

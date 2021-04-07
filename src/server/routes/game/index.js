@@ -5,8 +5,8 @@ export default (app) => {
   const globalSocket = io.listen(app);
 
   globalSocket.sockets.on('connection', (socket) => {
-    socket.emit('game/state', { gameId: 11 });
-    socket.on('game/join', (user) => {
+    socket.on('game/join', (data) => {
+      console.log(data);
       // name: string, avatar: "#aabbcc", gameId: "default nanoid()
       // if game doesn't exist, create game (new game)
       // broadcast/user game/state to new user
@@ -30,6 +30,25 @@ export default (app) => {
     /* Game State
     // pending
     { id, title, status: 'pending', readyList: Array<UserReferences> }
+
+    // state
+    game: {
+      id: string,
+      title: string,
+      pending: enumeration,
+      users: Array<user> { id: string, name: string, avatar: string };
+      readyList?: Array<UserReferences>,
+      question?: {
+        id: string;
+        text: string;
+        musicId: string;
+        readyList: Array<UserReferences> { [user.id]: boolean; }
+        answers: Array<answers> {id: string, text: string}
+      },
+      leaderboard: Array<{ userId: string, score: number }>
+    },
+    onReady: () => void,
+    onAnswer: (answer.id) => void
 
     // started
     {
