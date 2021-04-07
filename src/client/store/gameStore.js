@@ -43,24 +43,23 @@ const StateProvider = ( { children } ) => {
 
   /* Socket */
   const [socket, setSocket] = useState(null);
-  const [connected, setConnected] = useState(null);
 
   useEffect(() => {
     setSocket(io());
-    setConnected(true);
   }, []);
 
   useEffect(() => {
-    if (connected) {
+    if (socket) {
       socket.on('game/state', (game) => {
         dispatch({
           type: 'GAME_STATE',
           payload: game
         });
-        console.log(`GAME STATE`, game);
+        
+        /* Update local storage */
       });
     }
-  }, [connected]);
+  }, [socket]);
 
   useEffect(() => {
     if (socket && state.currentUser && !state.game) {

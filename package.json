@@ -4,10 +4,14 @@
   "description": "JS hackday",
   "scripts": {
     "dev:server": "nodemon --experimental-json-modules -r dotenv/config src/server/index.js",
-    "start": "react-scripts start",
+    "dev:client": "react-scripts start",
     "build": "react-scripts build",
+    "start": "node --experimental-json-modules src/server/index.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "proxy": "http://localhost:4000",
   "repository": {
