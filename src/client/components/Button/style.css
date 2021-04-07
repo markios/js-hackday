@@ -1,0 +1,28 @@
+.button {
+    background:#F7EaC7;
+    color:#303038;
+    font-weight:bolder;
+    border:solid 1px #202024;
+
+    text-align:center;
+    padding:10px;
+
+    border-radius:5px;
+
+    user-select:none;
+}
+
+.button:hover {
+    width:90%;
+    margin:auto;
+    cursor:pointer;
+}
+
+.button[data-disabled="true"],
+.button[data-disabled="true"]:hover {
+    background:#111;
+    color:#303038;
+    margin-top:0;
+    padding:10px;
+    cursor:default;
+}
