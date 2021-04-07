@@ -10,8 +10,17 @@ import './userForm.css';
 const onChangeWrapper = (setter) => (e) => setter(e.currentTarget.value);
 
 const UserForm = ({ onSubmit }) => {
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
   const [name, setName] = useState('');
-  const [avatar, setAvatar] = useState('#000');
+  const [avatar, setAvatar] = useState(getRandomColor());
   
   const onSubmitHandler = (e) => {
     e.preventDefault();
