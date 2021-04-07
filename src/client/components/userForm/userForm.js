@@ -23,7 +23,9 @@ const UserForm = ({ onSubmit }) => {
   const [avatar, setAvatar] = useState(getRandomColor());
   
   const onSubmitHandler = (e) => {
-    e.preventDefault();
+    if(!name || !name.length) {
+      return window.alert("Enter a name!");
+    }
     onSubmit(name, avatar);
   };
 
