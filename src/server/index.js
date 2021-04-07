@@ -3,6 +3,7 @@ import config from './config/index.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import basicAuth from 'express-basic-auth';
 import cors from 'cors';
 import http from 'http';
 import gameRouter from './routes/game/index.js';
@@ -14,12 +15,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 /* When you realise your app needs to be SSR 🤦‍♂️ */
 const appIndexFile = fs.readFileSync(path.join(__dirname, '../../build/index.html'), 'utf8');
-const { SERVER } = config;
+const { SERVER, USERS } = config;
 
 const server = http.createServer(app);
 
 /* Middlewares */
 app.use(cors());
+app.use(basicAuth({ users: USERS, challenge: true, realm: 'Imb4T3st4pp' }));
 gameRouter(server);
 app.use('/', express.static(path.join(__dirname, '../../build')));
 /* remove this hack when you can be arsed */
