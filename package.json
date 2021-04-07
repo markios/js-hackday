@@ -2,13 +2,14 @@
   "name": "js-hackday",
   "version": "1.0.0",
   "description": "JS hackday",
-  "main": "index.html",
   "scripts": {
-    "dev:client": "parcel src/client/index.html --open",
-    "build": "parcel build src/client/index.html --dist-dir ./dist",
     "dev:server": "nodemon -r dotenv/config src/server/index.js",
-    "parcelhelp": "parcel help build"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:4000",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/markios/js-hackday.git"
@@ -16,18 +17,38 @@
   "type": "module",
   "author": "Mark Kellett",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/markios/js-hackday/issues"
-  },
-  "homepage": "https://github.com/markios/js-hackday#readme",
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7",
-    "parcel": "^2.0.0-beta.2"
+    "nodemon": "^2.0.7"
   },
   "dependencies": {
     "boom": "^7.3.0",
     "express": "^4.17.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

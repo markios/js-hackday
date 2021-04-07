@@ -1,13 +1,15 @@
 import express from 'express';
 import config from './config/index.js';
-import gameRouter from './routes/game/index.js';
+// import gameRouter from './routes/game/index.js';
 import notFoundMiddleware from './middlewares/notFoundMiddleware.js';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware.js';
 
 const app = express();
 const { SERVER } = config;
 
-app.use('/game', gameRouter);
+app.get('/game', (_, res) => {
+  res.json({ message: 'welcome' });
+});
 
 /* Middlewares */
 app.use(notFoundMiddleware);
