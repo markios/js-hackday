@@ -50,6 +50,7 @@ input[type="color"] {
   border-radius:7px !important;
   overflow:hidden;
   -webkit-appearance: none;
+  cursor:text;
 }
 
 ::-moz-color-swatch {
