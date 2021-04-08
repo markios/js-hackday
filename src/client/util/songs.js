@@ -8,6 +8,8 @@ function init() {
     document.body.appendChild(wrapper);
 }
 
+let timeout;
+
 async function playTrack(songId, seconds=10) {
     playing = true;
 
@@ -38,7 +40,9 @@ async function playTrack(songId, seconds=10) {
     });
 
     // Let song play for a bit
-    await new Promise(res => setTimeout(res, seconds * 1000));
+    await new Promise(res => { 
+      timeout = setTimeout(res, seconds * 1000);
+    });
 
     // Stop song
     wrapper.innerHTML = "";
@@ -53,6 +57,7 @@ function stopTrack() {
     if(playing) {
         wrapper.innerHTML = "";
         playing = false;
+        clearTimeout(timeout);
     }
 }
 
