@@ -15,13 +15,13 @@ function Game({ game, onReady, onAnswer, currentUser }) {
 
     const handleAnswer = (answerId) => {
       onAnswer(answerId);
+      setSongLoaded(false);
     };
 
     useEffect(() => {
       if (game?.question && currentQuestionId !== game.question.id) {
         setCurrentQuestionId(game.question.id);
         stopTrack();
-        setSongLoaded(false);
       }
     }, [game]);
     
@@ -69,6 +69,7 @@ function Game({ game, onReady, onAnswer, currentUser }) {
                 </>}
 
                 {game.status === "started" && <>
+                    <h3>{`Question ${game.question.number}`}</h3>
                     <Panel>
                         Listen to 10 seconds of the song and choose the best answer.
                     </Panel>

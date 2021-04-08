@@ -23,11 +23,12 @@ class Game {
       currentQuestion: null,
       userVotes: {},
       ...data,
-      questionState: data.questions.reduce((result, question) => {
+      questionState: data.questions.reduce((result, question, index) => {
         return {
           ...result,
           [question.id]: {
             ...question,
+            number: index + 1,
             readyList: {}
           }
         };

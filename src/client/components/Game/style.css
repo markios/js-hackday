@@ -67,7 +67,7 @@
 
 .fade-in {
   opacity: 0;
-  animation: fadeIn ease 0.2s;
+  animation: fadeIn ease 0.3s;
   animation-fill-mode: forwards;
 }
 
