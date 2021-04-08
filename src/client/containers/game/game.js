@@ -43,7 +43,7 @@ const GameContainer = ({ match }) => {
       </Route>
       <Route path={`${match.path}`}>
         {!game && <div>Loading game {target}</div>}
-        {game && <Game game={state.game} onReady={onReady} onAnswer={onAnswer}/>}
+        {game && <Game game={state.game} currentUser={currentUser} onReady={onReady} onAnswer={onAnswer}/>}
       </Route>
     </Switch>
   );

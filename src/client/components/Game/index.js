@@ -4,7 +4,7 @@ import { playTrack } from "../../util/songs";
 
 import "./style.css";
 
-function Game({ game, onReady, onAnswer }) {
+function Game({ game, onReady, onAnswer, currentUser }) {
     const handleListen = () => {
         playTrack(game.question.musicId);
     };
@@ -64,13 +64,17 @@ function Game({ game, onReady, onAnswer }) {
                     <Button disabled={game.readyList[game.userId]} onClick={handleListen}>Click to listen</Button>
                     <br/>
 
-                    <Panel>
+                    {!game.question.readyList[currentUser.id] && 
+                    <>
+                      <Panel>
                         {game.question.text}
-                    </Panel>
-
-                    {game.question.answers.map(answer => (
+                      </Panel>
+                      {game.question.answers.map(answer => (
                         <Button onClick={() => handleAnswer(answer.id)}>{answer.text}</Button>
-                    ))}
+                      ))}
+                    </>}
+                    
+                    {game.question.readyList[currentUser.id] && <Panel>Waiting for others to answer</Panel>}
                 </>}
 
                 {game.status === "finished" && <>
