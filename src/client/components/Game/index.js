@@ -1,17 +1,27 @@
+import { useState, useEffect } from 'react';
 import Button from "../Button";
 import Panel from "../Panel";
-import { playTrack } from "../../util/songs";
+import { playTrack, stopTrack } from "../../util/songs";
 
 import "./style.css";
 
 function Game({ game, onReady, onAnswer, currentUser }) {
     const handleListen = () => {
-        playTrack(game.question.musicId);
+      playTrack(game.question.musicId);
     };
 
     const handleAnswer = (answerId) => {
-        onAnswer(answerId);
+      onAnswer(answerId);
     };
+
+    const [currentQuestionId, setCurrentQuestionId] = useState(null);
+
+    useEffect(() => {
+      if (game?.question && currentQuestionId !== game.question.id) {
+        setCurrentQuestionId(game.question.id);
+        stopTrack();
+      }
+    }, [game]);
     
     return (
         <div className="game-wrapper">
