@@ -2,7 +2,7 @@
   "title": "Something something",
   "questions": [{
     "id": 1,
-    "text": "What is the name of the artist",
+    "text": "Name the 80's RnB artist of this banger!",
     "musicId": 51923948,
     "correctAnswer": 1,
     "answers": [{
@@ -10,7 +10,67 @@
       "text": "Bobby brown"
     }, {
       "id": 2,
-      "text": "Bobby Baddy"
+      "text": "Will Smith"
+    }, {
+      "id": 3,
+      "text": "Slick Rick"
+    }, {
+      "id": 4,
+      "text": "Jam master jay"
+    }]
+  }, {
+    "id": 2,
+    "text": "What year did lady Gaga release this song paparatzi",
+    "musicId": 255908043,
+    "correctAnswer": 3,
+    "answers": [{
+      "id": 1,
+      "text": "2007"
+    }, {
+      "id": 2,
+      "text": "2010"
+    }, {
+      "id": 3,
+      "text": "2009"
+    }, {
+      "id": 4,
+      "text": "2011"
+    }]
+  }, {
+    "id": 3,
+    "text": "What movie was this Dr Dre classic a soundtrack to?",
+    "musicId": 35134337,
+    "correctAnswer": 4,
+    "answers": [{
+      "id": 1,
+      "text": "Dangerous minds"
+    }, {
+      "id": 2,
+      "text": "187"
+    }, {
+      "id": 3,
+      "text": "Straight outa compton"
+    }, {
+      "id": 4,
+      "text": "Training Day"
+    }]
+  }, {
+    "id": 4,
+    "text": "What was Frank Sinatra's nickname",
+    "musicId": 141257734,
+    "correctAnswer": 3,
+    "answers": [{
+      "id": 1,
+      "text": "Slick shoes"
+    }, {
+      "id": 2,
+      "text": "Dapper Don"
+    }, {
+      "id": 3,
+      "text": "Old Blue Eyes"
+    }, {
+      "id": 4,
+      "text": "Penguin man"
     }]
   }]
 }
