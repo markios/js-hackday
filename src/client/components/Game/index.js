@@ -6,20 +6,22 @@ import { playTrack, stopTrack } from "../../util/songs";
 import "./style.css";
 
 function Game({ game, onReady, onAnswer, currentUser }) {
+    const [currentQuestionId, setCurrentQuestionId] = useState(null); 
+    const [songLoaded, setSongLoaded] = useState(false);
+  
     const handleListen = () => {
-      playTrack(game.question.musicId);
+      playTrack(game.question.musicId, 10, () => setSongLoaded(true));
     };
 
     const handleAnswer = (answerId) => {
       onAnswer(answerId);
     };
 
-    const [currentQuestionId, setCurrentQuestionId] = useState(null);
-
     useEffect(() => {
       if (game?.question && currentQuestionId !== game.question.id) {
         setCurrentQuestionId(game.question.id);
         stopTrack();
+        setSongLoaded(false);
       }
     }, [game]);
     
@@ -74,15 +76,15 @@ function Game({ game, onReady, onAnswer, currentUser }) {
                     <Button disabled={game.readyList[game.userId]} onClick={handleListen}>Click to listen</Button>
                     <br/>
 
-                    {!game.question.readyList[currentUser.id] && 
-                    <>
+                    {songLoaded && !game.question.readyList[currentUser.id] && 
+                    <div className="fade-in">
                       <Panel>
                         {game.question.text}
                       </Panel>
                       {game.question.answers.map(answer => (
                         <Button onClick={() => handleAnswer(answer.id)}>{answer.text}</Button>
                       ))}
-                    </>}
+                    </div>}
                     
                     {game.question.readyList[currentUser.id] && <Panel>Waiting for others to answer</Panel>}
                 </>}

@@ -10,7 +10,7 @@ function init() {
 
 let timeout;
 
-async function playTrack(songId, seconds=10) {
+async function playTrack(songId, seconds=10, onSongLoad = () => {}) {
     playing = true;
 
     const songUrl = [
@@ -38,6 +38,8 @@ async function playTrack(songId, seconds=10) {
     await new Promise((res, rej) => {
         songFrame.addEventListener("load", () => res());
     });
+
+    onSongLoad();
 
     // Let song play for a bit
     await new Promise(res => { 

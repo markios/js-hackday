@@ -65,6 +65,17 @@
     padding-top:0;
 }
 
+.fade-in {
+  opacity: 0;
+  animation: fadeIn ease 0.2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
 .game-title {
     font-size:1.5em;
     font-weight:bold;
