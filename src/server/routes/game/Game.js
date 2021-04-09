@@ -67,6 +67,23 @@ class Game {
     }
   }
 
+  /**
+   * Remove user from readyLists and users list, but keep their scores
+   * incase they rejoin
+   * @param {object} user 
+   */
+  removeUser(user) {
+    const index = this.state.users.findIndex(({ id }) => id === user.id);
+    if (index >= 0) {
+      this.state.users.splice(index, 1);
+      delete this.state.readyList[user.id];
+      Object.keys(this.state.questionState).forEach((id) => {
+        delete this.state.questionState[id].readyList[user.id];
+      });
+      this.progressGame();
+    }
+  }
+
   addReady(userId) {
     this.state.readyList[userId] = true;
     this.progressGame();
