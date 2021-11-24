@@ -103,7 +103,7 @@ class Game {
     const { questions } = this.state;
     this.state = {
       ...this.state,
-      currentQuestion: questions[0],
+      currentQuestion: questions[0].id,
       status: STATUS.STARTED,
     };
   }
@@ -184,7 +184,10 @@ class Game {
     if (status === STATUS.STARTED) {
       return {
         ...defaultState,
-        question: questionState[currentQuestion],
+        question: {
+          ...questionState[currentQuestion],
+          correctAnswer: undefined,
+        },
       };
     }
 
