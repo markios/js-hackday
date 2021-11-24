@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import Button from "../Button";
 import Panel from "../Panel";
 import { playTrack, stopTrack } from "../../util/songs";
@@ -6,115 +6,135 @@ import { playTrack, stopTrack } from "../../util/songs";
 import "./style.css";
 
 function Game({ game, onReady, onAnswer, currentUser }) {
-    const [currentQuestionId, setCurrentQuestionId] = useState(null); 
-    const [songLoaded, setSongLoaded] = useState(false);
-  
-    const handleListen = () => {
-      playTrack(game.question.musicId, 10, () => setSongLoaded(true));
-    };
+  const [currentQuestionId, setCurrentQuestionId] = useState(null);
+  const [songLoaded, setSongLoaded] = useState(false);
 
-    const handleAnswer = (answerId) => {
-      onAnswer(answerId);
-      setSongLoaded(false);
-    };
+  const handleListen = () => {
+    playTrack(game.question.musicId, 10, () => setSongLoaded(true));
+  };
 
-    useEffect(() => {
-      if (game?.question && currentQuestionId !== game.question.id) {
-        setCurrentQuestionId(game.question.id);
-        stopTrack();
-      }
-    }, [game]);
-    
-    return (
-        <div className="game-wrapper">
-          <div className="game-players-wrapper">
-            <div className="game-players">
-              {game.users.map(player => {
-                let extra = "null";
+  const handleAnswer = (answerId) => {
+    onAnswer(answerId);
+    setSongLoaded(false);
+  };
 
-                if(game.status === "pending" && !game.readyList[player.id]) {
-                  extra = "Waiting";
-                }
+  useEffect(() => {
+    if (game?.question && currentQuestionId !== game.question.id) {
+      setCurrentQuestionId(game.question.id);
+      stopTrack();
+    }
+  }, [game]);
 
-                if(game.status === "started" && !game.question.readyList[player.id]) {
-                  extra = "Waiting";
-                }
+  return (
+    <div className="game-wrapper">
+      <div className="game-players-wrapper">
+        <div className="game-players">
+          {game.users.map((player) => {
+            let extra = "null";
 
-                if(game.status === "finished") {
-                  extra = game.leaderboard.find(({ userId }) => userId === player.id).score + " points";
-                }
+            if (game.status === "pending" && !game.readyList[player.id]) {
+              extra = "Waiting";
+            }
 
+            if (
+              game.status === "started" &&
+              !game.question.readyList[player.id]
+            ) {
+              extra = "Waiting";
+            }
+
+            if (game.status === "finished") {
+              extra =
+                game.leaderboard.find(({ userId }) => userId === player.id)
+                  .score + " points";
+            }
+
+            return (
+              <div
+                key={player.id}
+                className="game-player"
+                style={{ background: player.avatar }}
+                data-extra={extra}
+              >
+                {player.name}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="game-state">
+        <div className="game-title">Songhack</div>
+        <br />
+
+        {game.status === "pending" && (
+          <>
+            <Panel>The next round will start when everyone is ready.</Panel>
+            <Button disabled={game.readyList[game.userId]} onClick={onReady}>
+              I'm ready
+            </Button>
+          </>
+        )}
+
+        {game.status === "started" && (
+          <>
+            <h3>{`Question ${game.question.number}`}</h3>
+            <Panel>
+              Listen to 10 seconds of the song and choose the best answer.
+            </Panel>
+
+            <Button
+              disabled={game.readyList[game.userId]}
+              onClick={handleListen}
+            >
+              Click to listen
+            </Button>
+            <br />
+
+            {songLoaded && !game.question.readyList[currentUser.id] && (
+              <div className="fade-in">
+                <Panel>{game.question.text}</Panel>
+                {game.question.answers.map((answer) => (
+                  <Button onClick={() => handleAnswer(answer.id)}>
+                    {answer.text}
+                  </Button>
+                ))}
+              </div>
+            )}
+
+            {game.question.readyList[currentUser.id] && (
+              <Panel>Waiting for others to answer</Panel>
+            )}
+          </>
+        )}
+
+        {game.status === "finished" && (
+          <>
+            <Panel>And the winners are:</Panel>
+
+            <table className="game-leaderboard">
+              <tr>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+
+              {game.leaderboard.map(({ userId, score }) => {
+                const player = game.users.find((user) => user.id === userId);
                 return (
-                  <div
-                    key={player.id}
-                    className="game-player"
-                    style={{background: player.avatar}}
-                    data-extra={extra}>
-                    {player.name}
-                  </div>
+                  <tr>
+                    <td className="game-leaderboard-name-value">
+                      {player.name}
+                    </td>
+                    <td className="game-leaderboard-score-value">{score}</td>
+                  </tr>
                 );
               })}
-            </div>
-          </div>
-
-            <div className="game-state">
-                <div className="game-title">Songhack</div>
-                <br/>
-
-                {game.status === "pending" && <>
-                    <Panel>
-                        The next round will start when everyone is ready.
-                    </Panel>
-                    <Button disabled={game.readyList[game.userId]} onClick={onReady}>I'm ready</Button>
-                </>}
-
-                {game.status === "started" && <>
-                    <h3>{`Question ${game.question.number}`}</h3>
-                    <Panel>
-                        Listen to 10 seconds of the song and choose the best answer.
-                    </Panel>
-
-                    <Button disabled={game.readyList[game.userId]} onClick={handleListen}>Click to listen</Button>
-                    <br/>
-
-                    {songLoaded && !game.question.readyList[currentUser.id] && 
-                    <div className="fade-in">
-                      <Panel>
-                        {game.question.text}
-                      </Panel>
-                      {game.question.answers.map(answer => (
-                        <Button onClick={() => handleAnswer(answer.id)}>{answer.text}</Button>
-                      ))}
-                    </div>}
-                    
-                    {game.question.readyList[currentUser.id] && <Panel>Waiting for others to answer</Panel>}
-                </>}
-
-                {game.status === "finished" && <>
-                    <Panel>
-                        And the winners are:
-                    </Panel>
-                    
-                    <table className="game-leaderboard">
-                        <tr>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                        
-                        {game.leaderboard.map(({ userId, score }) => {
-                            const player = game.users.find((user) => user.id === userId);
-                            return (
-                              <tr>
-                                <td className="game-leaderboard-name-value">{player.name}</td>
-                                <td className="game-leaderboard-score-value">{score}</td>
-                              </tr>
-                            );
-                        })}
-                    </table>
-                </>}
-            </div>
-        </div>
-    );
+            </table>
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default Game;

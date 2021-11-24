@@ -1,15 +1,15 @@
-import data from '../../data/game.json';
+import data from "../../data/game.json";
 
 const STATUS = {
-  PENDING: 'pending',
-  STARTED: 'started',
-  FINISHED: 'finished',
+  PENDING: "pending",
+  STARTED: "started",
+  FINISHED: "finished",
 };
 
 const userAnswerTemplate = data.questions.reduce((result, question) => {
   return {
     ...result,
-    [question.id]: null
+    [question.id]: null,
   };
 }, {});
 
@@ -29,20 +29,23 @@ class Game {
           [question.id]: {
             ...question,
             number: index + 1,
-            readyList: {}
-          }
+            readyList: {},
+          },
         };
       }, {}),
-    }
+    };
   }
 
   static allReady(item) {
-    return Object.values(item.readyList).every(r => r);
+    return Object.values(item.readyList).every((r) => r);
   }
 
   progressGame() {
     const { status, currentQuestion } = this.state;
-    const target = (status === STATUS.PENDING) ? this.state : this.state.questionState[currentQuestion];
+    const target =
+      status === STATUS.PENDING
+        ? this.state
+        : this.state.questionState[currentQuestion];
 
     const everyoneAnswered = Game.allReady(target);
     if (everyoneAnswered) {
@@ -62,7 +65,7 @@ class Game {
     });
     if (!this.state.userVotes[user.id]) {
       this.state.userVotes[user.id] = {
-        ...userAnswerTemplate
+        ...userAnswerTemplate,
       };
     }
   }
@@ -70,7 +73,7 @@ class Game {
   /**
    * Remove user from readyLists and users list, but keep their scores
    * incase they rejoin
-   * @param {object} user 
+   * @param {object} user
    */
   removeUser(user) {
     const index = this.state.users.findIndex(({ id }) => id === user.id);
@@ -101,7 +104,7 @@ class Game {
     this.state = {
       ...this.state,
       currentQuestion: questions[0],
-      status: STATUS.STARTED
+      status: STATUS.STARTED,
     };
   }
 
@@ -111,15 +114,15 @@ class Game {
 
     let nextIndex = 0;
     if (status === STATUS.STARTED) {
-      nextIndex = questions.findIndex(q => q.id === currentQuestion) + 1;
+      nextIndex = questions.findIndex((q) => q.id === currentQuestion) + 1;
     }
     const nextQuestion = questions[nextIndex];
-    
+
     if (nextQuestion) {
       this.state = {
         ...this.state,
         status: STATUS.STARTED,
-        currentQuestion: nextQuestion.id
+        currentQuestion: nextQuestion.id,
       };
     } else {
       this.finishGame();
@@ -127,17 +130,19 @@ class Game {
   }
 
   finishGame() {
-    const { userVotes, questions } = this.state;
+    const { userVotes, questions, users } = this.state;
     const scores = {};
     questions.forEach(({ correctAnswer, id }) => {
       Object.keys(userVotes).forEach((userId) => {
-        if (scores[userId] === undefined) {
-          scores[userId] = 0;
+        if (users.find((currentUser) => currentUser.id === userId)) {
+          if (scores[userId] === undefined) {
+            scores[userId] = 0;
+          }
+          scores[userId] += userVotes[userId][id] === correctAnswer ? 100 : 0;
         }
-        scores[userId] += userVotes[userId][id] === correctAnswer ? 100 : 0;
       });
     });
-    
+
     const leaderboard = Object.entries(scores).reduce((o, [userId, score]) => {
       o.push({ userId, score });
       return o;
@@ -146,8 +151,8 @@ class Game {
     this.state = {
       ...this.state,
       status: STATUS.FINISHED,
-      leaderboard: leaderboard.sort((a, b) => b.score - a.score)
-    }
+      leaderboard: leaderboard.sort((a, b) => b.score - a.score),
+    };
   }
 
   getStateSnapshot() {
@@ -159,7 +164,7 @@ class Game {
       users,
       questionState,
       currentQuestion,
-      leaderboard
+      leaderboard,
     } = this.state;
 
     const defaultState = {
@@ -167,30 +172,29 @@ class Game {
       title,
       status,
       readyList,
-      users
+      users,
     };
 
     if (status === STATUS.PENDING) {
       return {
-        ...defaultState
-      }
+        ...defaultState,
+      };
     }
 
     if (status === STATUS.STARTED) {
       return {
         ...defaultState,
-        question: questionState[currentQuestion]
-      }
+        question: questionState[currentQuestion],
+      };
     }
 
     if (status === STATUS.FINISHED) {
       return {
         ...defaultState,
-        leaderboard
-      }
+        leaderboard,
+      };
     }
   }
-
-};
+}
 
 export default Game;
