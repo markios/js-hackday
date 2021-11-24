@@ -1,76 +1,245 @@
 {
   "title": "Something something",
-  "questions": [{
-    "id": 1,
-    "text": "Name the 80's RnB artist of this banger!",
-    "musicId": 51923948,
-    "correctAnswer": 1,
-    "answers": [{
+  "questions": [
+    {
       "id": 1,
-      "text": "Bobby brown"
-    }, {
+      "text": "Name the 80's RnB artist of this banger!",
+      "musicId": 361176554,
+      "correctAnswer": 1,
+      "answers": [
+        {
+          "id": 1,
+          "text": "Bobby brown"
+        },
+        {
+          "id": 2,
+          "text": "Fresh Prince"
+        },
+        {
+          "id": 3,
+          "text": "Slick Rick"
+        },
+        {
+          "id": 4,
+          "text": "Jam master jay"
+        }
+      ]
+    },
+    {
       "id": 2,
-      "text": "Will Smith"
-    }, {
+      "text": "What year did lady Gaga release this song paparatzi",
+      "musicId": 255908043,
+      "correctAnswer": 3,
+      "answers": [
+        {
+          "id": 1,
+          "text": "2007"
+        },
+        {
+          "id": 2,
+          "text": "2010"
+        },
+        {
+          "id": 3,
+          "text": "2009"
+        },
+        {
+          "id": 4,
+          "text": "2011"
+        }
+      ]
+    },
+    {
       "id": 3,
-      "text": "Slick Rick"
-    }, {
+      "text": "What movie was this Dr Dre classic a soundtrack to?",
+      "musicId": 35134337,
+      "correctAnswer": 4,
+      "answers": [
+        {
+          "id": 1,
+          "text": "Dangerous minds"
+        },
+        {
+          "id": 2,
+          "text": "187"
+        },
+        {
+          "id": 3,
+          "text": "Straight outa compton"
+        },
+        {
+          "id": 4,
+          "text": "Training Day"
+        }
+      ]
+    },
+    {
       "id": 4,
-      "text": "Jam master jay"
-    }]
-  }, {
-    "id": 2,
-    "text": "What year did lady Gaga release this song paparatzi",
-    "musicId": 255908043,
-    "correctAnswer": 3,
-    "answers": [{
-      "id": 1,
-      "text": "2007"
-    }, {
-      "id": 2,
-      "text": "2010"
-    }, {
-      "id": 3,
-      "text": "2009"
-    }, {
-      "id": 4,
-      "text": "2011"
-    }]
-  }, {
-    "id": 3,
-    "text": "What movie was this Dr Dre classic a soundtrack to?",
-    "musicId": 35134337,
-    "correctAnswer": 4,
-    "answers": [{
-      "id": 1,
-      "text": "Dangerous minds"
-    }, {
-      "id": 2,
-      "text": "187"
-    }, {
-      "id": 3,
-      "text": "Straight outa compton"
-    }, {
-      "id": 4,
-      "text": "Training Day"
-    }]
-  }, {
-    "id": 4,
-    "text": "What was Frank Sinatra's nickname",
-    "musicId": 141257734,
-    "correctAnswer": 3,
-    "answers": [{
-      "id": 1,
-      "text": "Slick shoes"
-    }, {
-      "id": 2,
-      "text": "Dapper Don"
-    }, {
-      "id": 3,
-      "text": "Old Blue Eyes"
-    }, {
-      "id": 4,
-      "text": "Penguin man"
-    }]
-  }]
+      "text": "Tame Impala hails from which country",
+      "musicId": 256241332,
+      "correctAnswer": 4,
+      "answers": [
+        {
+          "id": 1,
+          "text": "Los Angeles, USA"
+        },
+        {
+          "id": 2,
+          "text": "Cape Town, South Africe"
+        },
+        {
+          "id": 3,
+          "text": "Auckland, NZ"
+        },
+        {
+          "id": 4,
+          "text": "Perth, Australia"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "From the Smooth Criminal music video, what colour was Michael Jacksons shirt??",
+      "musicId": 308950076,
+      "correctAnswer": 1,
+      "answers": [
+        {
+          "id": 1,
+          "text": "Blue"
+        },
+        {
+          "id": 2,
+          "text": "Purple"
+        },
+        {
+          "id": 3,
+          "text": "Black"
+        },
+        {
+          "id": 4,
+          "text": "White"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Name this Adele Classic",
+      "musicId": 34517808,
+      "correctAnswer": 2,
+      "answers": [
+        {
+          "id": 1,
+          "text": "Rolling in the deep"
+        },
+        {
+          "id": 2,
+          "text": "Someone like you"
+        },
+        {
+          "id": 3,
+          "text": "Feel my love"
+        },
+        {
+          "id": 4,
+          "text": "Hello"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Ice Ice Baby, how old is this song",
+      "musicId": 73200747,
+      "correctAnswer": 1,
+      "answers": [
+        {
+          "id": 1,
+          "text": "21"
+        },
+        {
+          "id": 2,
+          "text": "25"
+        },
+        {
+          "id": 3,
+          "text": "22"
+        },
+        {
+          "id": 4,
+          "text": "20"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "Ah Freddie, you did write a classic, but what year was this written",
+      "musicId": 252516215,
+      "correctAnswer": 3,
+      "answers": [
+        {
+          "id": 1,
+          "text": "1975"
+        },
+        {
+          "id": 2,
+          "text": "1976"
+        },
+        {
+          "id": 3,
+          "text": "1978"
+        },
+        {
+          "id": 4,
+          "text": "1979"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Name that UKG classic",
+      "musicId": 173708742,
+      "correctAnswer": 4,
+      "answers": [
+        {
+          "id": 1,
+          "text": "Rewind"
+        },
+        {
+          "id": 2,
+          "text": "Flowers"
+        },
+        {
+          "id": 3,
+          "text": "Artful Dodger"
+        },
+        {
+          "id": 4,
+          "text": "Fill Me In"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "When was the Chilli Peppers can't stop released?",
+      "musicId": 126961651,
+      "correctAnswer": 1,
+      "answers": [
+        {
+          "id": 1,
+          "text": "2002"
+        },
+        {
+          "id": 2,
+          "text": "2000"
+        },
+        {
+          "id": 3,
+          "text": "2003"
+        },
+        {
+          "id": 4,
+          "text": "1999"
+        }
+      ]
+    }
+  ]
 }
