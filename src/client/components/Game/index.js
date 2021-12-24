@@ -23,7 +23,7 @@ function Game({ game, onReady, onAnswer, currentUser }) {
       setCurrentQuestionId(game.question.id);
       stopTrack();
     }
-  }, [game]);
+  }, [game, currentQuestionId]);
 
   return (
     <div className="game-wrapper">
@@ -77,7 +77,7 @@ function Game({ game, onReady, onAnswer, currentUser }) {
         )}
 
         {game.status === "started" && (
-          <>
+          <section key={`question-${game.question.number}`} className="fade-in">
             <h3>{`Question ${game.question.number}`}</h3>
             <Panel>
               Listen to 10 seconds of the song and choose the best answer.
@@ -105,7 +105,7 @@ function Game({ game, onReady, onAnswer, currentUser }) {
             {game.question.readyList[currentUser.id] && (
               <Panel>Waiting for others to answer</Panel>
             )}
-          </>
+          </section>
         )}
 
         {game.status === "finished" && (
