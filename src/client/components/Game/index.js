@@ -29,37 +29,38 @@ function Game({ game, onReady, onAnswer, currentUser }) {
     <div className="game-wrapper">
       <div className="game-players-wrapper">
         <div className="game-players">
-          {game.users.map((player) => {
-            let extra = "null";
+          {game.status !== "finished" &&
+            game.users.map((player) => {
+              let extra = "null";
 
-            if (game.status === "pending" && !game.readyList[player.id]) {
-              extra = "Waiting";
-            }
+              if (game.status === "pending" && !game.readyList[player.id]) {
+                extra = "Waiting";
+              }
 
-            if (
-              game.status === "started" &&
-              !game.question.readyList[player.id]
-            ) {
-              extra = "Waiting";
-            }
+              if (
+                game.status === "started" &&
+                !game.question.readyList[player.id]
+              ) {
+                extra = "Waiting";
+              }
 
-            if (game.status === "finished") {
-              extra =
-                game.leaderboard.find(({ userId }) => userId === player.id)
-                  .score + " points";
-            }
+              if (game.status === "finished") {
+                extra =
+                  game.leaderboard.find(({ userId }) => userId === player.id)
+                    .score + " points";
+              }
 
-            return (
-              <div
-                key={player.id}
-                className="game-player"
-                style={{ background: player.avatar }}
-                data-extra={extra}
-              >
-                {player.name}
-              </div>
-            );
-          })}
+              return (
+                <div
+                  key={player.id}
+                  className="game-player"
+                  style={{ background: player.avatar }}
+                  data-extra={extra}
+                >
+                  {player.name}
+                </div>
+              );
+            })}
         </div>
       </div>
 
