@@ -1,10 +1,12 @@
 import React from "react";
 
-import Button from "../client/components/Button";
+import Button from ".";
+import "../../App.css";
+import "../../index.css";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Example/Button",
+  title: "Game/Button",
   component: Button,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
