@@ -1,13 +1,14 @@
 import React from "react";
 
-import Recap from ".";
+import RecapLeaderboard from "./RecapLeaderboard";
 import "../../App.css";
 import "../../index.css";
+import "./recap.css";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Game/Recap",
-  component: Recap,
+  title: "Game/Recap/Leaderboard",
+  component: RecapLeaderboard,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     game: { control: "json" },
@@ -15,36 +16,12 @@ export default {
 };
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template = (args) => <Recap {...args} />;
+const Template = (args) => <RecapLeaderboard {...args} />;
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
   game: {
-    questions: [
-      {
-        id: "q1",
-        text: "This is question 1?",
-        correctAnswer: 1,
-        answers: [
-          { text: "Answer 1", id: 1 },
-          { text: "Answer 2", id: 2 },
-          { text: "Answer 3", id: 3 },
-          { text: "Answer 4", id: 4 },
-        ],
-      },
-      {
-        id: "q2",
-        text: "What is the name of this song?",
-        correctAnswer: 3,
-        answers: [
-          { text: "Answer 1", id: 1 },
-          { text: "Answer 2", id: 2 },
-          { text: "Answer 3", id: 3 },
-          { text: "Answer 4", id: 4 },
-        ],
-      },
-    ],
     users: [
       {
         id: "a1",
@@ -62,20 +39,6 @@ Default.args = {
         avatar: "#DAF7A6",
       },
     ],
-    userVotes: {
-      a1: {
-        q1: 1,
-        q2: 2,
-      },
-      a2: {
-        q1: 2,
-        q2: 3,
-      },
-      a3: {
-        q1: 3,
-        q2: 2,
-      },
-    },
     leaderboard: [
       {
         userId: "a1",

@@ -12,6 +12,16 @@
   pointer-events: none;
 }
 
+/* Helpers */
+
+.xxl {
+  font-size: 40px;
+}
+
+.align-center {
+  text-align: center;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -24,7 +34,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  
 }
 
 .App-link {

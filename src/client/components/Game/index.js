@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "../Button";
 import Panel from "../Panel";
+import Recap from "../Recap";
 import { playTrack, stopTrack } from "../../util/songs";
 
 import "./style.css";
@@ -27,6 +28,8 @@ function Game({ game, onReady, onAnswer, currentUser }) {
 
   return (
     <div className="game-wrapper">
+      {game.status === "finished" && <Recap game={game} />}
+
       <div className="game-players-wrapper">
         <div className="game-players">
           {game.status !== "finished" &&
@@ -42,12 +45,6 @@ function Game({ game, onReady, onAnswer, currentUser }) {
                 !game.question.readyList[player.id]
               ) {
                 extra = "Waiting";
-              }
-
-              if (game.status === "finished") {
-                extra =
-                  game.leaderboard.find(({ userId }) => userId === player.id)
-                    .score + " points";
               }
 
               return (
@@ -107,31 +104,6 @@ function Game({ game, onReady, onAnswer, currentUser }) {
               <Panel>Waiting for others to answer</Panel>
             )}
           </section>
-        )}
-
-        {game.status === "finished" && (
-          <>
-            <Panel>And the winners are:</Panel>
-
-            <table className="game-leaderboard">
-              <tr>
-                <th>Name</th>
-                <th>Score</th>
-              </tr>
-
-              {game.leaderboard.map(({ userId, score }) => {
-                const player = game.users.find((user) => user.id === userId);
-                return (
-                  <tr>
-                    <td className="game-leaderboard-name-value">
-                      {player.name}
-                    </td>
-                    <td className="game-leaderboard-score-value">{score}</td>
-                  </tr>
-                );
-              })}
-            </table>
-          </>
         )}
       </div>
     </div>

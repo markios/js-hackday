@@ -164,6 +164,8 @@ class Game {
       users,
       questionState,
       currentQuestion,
+      questions,
+      userVotes,
       leaderboard,
     } = this.state;
 
@@ -194,6 +196,8 @@ class Game {
     if (status === STATUS.FINISHED) {
       return {
         ...defaultState,
+        questions,
+        userVotes,
         leaderboard,
       };
     }
