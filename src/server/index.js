@@ -19,7 +19,11 @@ const server = http.createServer(app);
 
 /* Middlewares */
 app.use(cors());
-app.use(basicAuth({ users: USERS, challenge: true, realm: config.AUTH.REALM }));
+if (isProduction()) {
+  app.use(
+    basicAuth({ users: USERS, challenge: true, realm: config.AUTH.REALM })
+  );
+}
 gameRouter(server);
 
 if (isProduction()) {

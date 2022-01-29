@@ -141,6 +141,19 @@
   border-color: var(--colour-four);
 }
 
+.recap__answer--chosen {
+  position: relative;
+}
+
+.recap__answer--chosen::before {
+  content: "🟡";
+  position: absolute;
+  left: -30px;
+  top: 0;
+  height: 40px;
+  line-height: 40px;
+}
+
 .recap__answer--correct {
   animation-name: correct;
 }
@@ -161,13 +174,14 @@
 
 .recap__user--incorrect {
   animation-name: fadeLow;
-  animation-delay: calc(4 * var(--animation-delay));
+  animation-delay: calc(3 * var(--animation-delay));
   animation-duration: 1s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
 }
 
 .recap__leaderboard {
+  width: 100%;
   max-width: 500px;
   min-height: 500px;
 }

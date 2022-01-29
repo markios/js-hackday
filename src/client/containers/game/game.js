@@ -1,26 +1,16 @@
-import { useContext, useEffect } from 'react';
-import {
-  Switch,
-  Route,
-  useParams,
-  useHistory
-} from "react-router-dom";
-import { store } from '../../store/gameStore';
-import UserForm from '../../components/userForm/userForm';
-import Game from '../../components/Game';
+import { useContext, useEffect } from "react";
+import { Switch, Route, useParams, useHistory } from "react-router-dom";
+import { store } from "../../store/gameStore";
+import UserForm from "../../components/userForm/userForm";
+import Game from "../../components/Game";
 
 const GameContainer = ({ match }) => {
   let { id } = useParams();
   const history = useHistory();
-  const {
-    setGameId,
-    state,
-    onRegisterUser,
-    onReady,
-    onAnswer
-  } = useContext(store);
+  const { setGameId, state, onRegisterUser, onReady, onAnswer } =
+    useContext(store);
   const { target, game, currentUser } = state;
-  
+
   useEffect(() => {
     setGameId(id);
   }, []);
@@ -43,7 +33,14 @@ const GameContainer = ({ match }) => {
       </Route>
       <Route path={`${match.path}`}>
         {!game && <div>Loading game {target}</div>}
-        {game && <Game game={state.game} currentUser={currentUser} onReady={onReady} onAnswer={onAnswer}/>}
+        {game && (
+          <Game
+            game={state.game}
+            currentUser={currentUser}
+            onReady={onReady}
+            onAnswer={onAnswer}
+          />
+        )}
       </Route>
     </Switch>
   );

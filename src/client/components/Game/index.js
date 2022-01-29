@@ -3,6 +3,7 @@ import Button from "../Button";
 import Panel from "../Panel";
 import Recap from "../Recap";
 import { playTrack, stopTrack } from "../../util/songs";
+import AudioManager, { AudioManager as AM } from "../../util/AudioManager";
 
 import "./style.css";
 
@@ -24,11 +25,18 @@ function Game({ game, onReady, onAnswer, currentUser }) {
       setCurrentQuestionId(game.question.id);
       stopTrack();
     }
+
+    if (game.status === "finished") {
+      stopTrack();
+      setTimeout(() => AudioManager.playSound(AM.sounds.GAME_OVER), 2000);
+    }
   }, [game, currentQuestionId]);
 
   return (
     <div className="game-wrapper">
-      {game.status === "finished" && <Recap game={game} />}
+      {game.status === "finished" && (
+        <Recap game={game} currentUser={currentUser} />
+      )}
 
       <div className="game-players-wrapper">
         <div className="game-players">
@@ -82,10 +90,11 @@ function Game({ game, onReady, onAnswer, currentUser }) {
             </Panel>
 
             <Button
+              className="button--active"
               disabled={game.readyList[game.userId]}
               onClick={handleListen}
             >
-              Click to listen
+              PLAY ▶
             </Button>
             <br />
 

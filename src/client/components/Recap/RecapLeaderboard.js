@@ -1,7 +1,7 @@
 import getUserById from "../../selectors/getUserById";
 import mapRevealDelay from "../../util/revealDelay";
 
-const RecapLeaderboard = ({ game }) => {
+const RecapLeaderboard = ({ game, onLeaderShown = () => {} }) => {
   const { leaderboard, users } = game;
 
   const mappedLeaderboard = mapRevealDelay(
@@ -15,9 +15,11 @@ const RecapLeaderboard = ({ game }) => {
     <div className="recap__leaderboard">
       <h2 className="xxl align-center">Leaderboard</h2>
       <ol>
-        {mappedLeaderboard.map((item) => (
+        {mappedLeaderboard.map((item, index) => (
           <li
             className="recap__leaderboard__listitem"
+            key={`lb__${index}`}
+            onAnimationEnd={index === 0 ? onLeaderShown : null}
             style={{
               border: `2px solid ${item.user.avatar}`,
               animationDelay: `${item.delay}s`,
