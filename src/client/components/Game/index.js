@@ -12,7 +12,7 @@ function Game({ game, onReady, onAnswer, currentUser }) {
   const [songLoaded, setSongLoaded] = useState(false);
 
   const handleListen = () => {
-    playTrack(game.question.musicId, 10, () => setSongLoaded(true));
+    playTrack(game.question.musicId, 30, () => setSongLoaded(true));
   };
 
   const handleAnswer = (answerId) => {
