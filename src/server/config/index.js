@@ -2,7 +2,7 @@ const PRODUCTION = "production";
 
 const config = Object.freeze({
   SERVER: {
-    PORT: process.env.PORT,
+    PORT: process.env.PORT ?? 5000,
   },
   USERS: {
     venom: process.env.PASSWORD || "password",

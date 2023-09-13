@@ -7,6 +7,7 @@ import basicAuth from "express-basic-auth";
 import cors from "cors";
 import http from "http";
 import gameRouter from "./routes/game/index.js";
+import healthRouter from './routes/health/index.js'
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,6 +26,7 @@ if (isProduction()) {
   );
 }
 gameRouter(server);
+healthRouter(app);
 
 if (isProduction()) {
   try {
@@ -34,6 +36,7 @@ if (isProduction()) {
       "utf8"
     );
     app.use("/", express.static(path.join(__dirname, "../../build")));
+
     /* remove this hack when you can be arsed */
     app.get("/game/*", (_, res) => res.send(appIndexFile));
   } catch (error) {

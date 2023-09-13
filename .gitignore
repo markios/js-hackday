@@ -104,3 +104,7 @@ build
 .tern-port
 
 *.todo
+
+build/*
+
+.env
